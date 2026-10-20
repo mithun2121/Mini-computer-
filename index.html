@@ -3,58 +3,105 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Mini Computer — an interactive coding workspace concept for ChatGPT and MCP integrations.">
-  <title>Mini Computer</title>
+  <meta name="description" content="Mini Computer — an interactive coding workspace prototype for ChatGPT and MCP integrations.">
+  <title>Mini Computer — Workspace</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="app-shell">
-    <header class="topbar">
-      <a class="brand" href="#" aria-label="Mini Computer home"><span class="brand-mark">M</span><span>Mini Computer</span></a>
-      <div class="connection"><span class="status-dot"></span><span>Local demo runtime</span></div>
-      <button id="resetBtn" class="button button-quiet" type="button">Reset demo</button>
+  <main class="computer">
+    <header class="computer-bar">
+      <div class="brand"><span class="computer-icon">▣</span><span class="brand-name">Mini Computer</span><span class="connected"><i></i> Local workspace</span></div>
+      <nav class="top-tools" aria-label="Workspace tools">
+        <button class="tool-button selected" data-tool="Files">▰ <span>Files</span></button>
+        <button class="tool-button" data-tool="Terminal">⌘ <span>Terminal</span></button>
+        <button class="tool-button" data-tool="Editor">☷ <span>Editor</span></button>
+        <button class="tool-button" data-tool="Browser">◎ <span>Browser</span></button>
+        <button class="tool-button" data-tool="Apps">⬡ <span>Apps</span></button>
+        <button class="icon-button" id="resetBtn" title="Reset demo" aria-label="Reset demo">⋮</button>
+      </nav>
     </header>
-    <section class="intro">
-      <p class="eyebrow">YOUR AI WORKSPACE</p>
-      <h1>Think it. Build it. <span>Run it.</span></h1>
-      <p class="subtitle">A small, interactive computer workspace designed to grow into a ChatGPT app with MCP tools.</p>
+
+    <section class="workbench">
+      <aside class="explorer">
+        <div class="pane-title"><span>▰</span> File Explorer <button class="icon-button small" title="Refresh demo files" aria-label="Refresh demo files">↻</button></div>
+        <div class="path-bar"><span>‹</span><span>›</span><span class="path">C:\MiniComputer\Projects</span><span>↻</span></div>
+        <div class="tree">
+          <div class="folder-row"><span>📁</span> Projects</div>
+          <div class="folder-row indent"><span>📁</span> NOVA <small>demo</small></div>
+          <div class="folder-row indent"><span>📁</span> SIGIL <small>demo</small></div>
+          <div class="folder-row indent"><span>📁</span> TradingAI <small>demo</small></div>
+          <div class="tree-divider"></div>
+          <button class="file-item active" data-file="main.js" type="button"><span class="file-icon js">JS</span><span>main.js</span></button>
+          <button class="file-item" data-file="notes.md" type="button"><span class="file-icon md">MD</span><span>README.md</span></button>
+          <div class="file-row"><span class="file-icon csv">CSV</span><span>data.csv</span><small>sample</small></div>
+        </div>
+        <div class="explorer-foot"><i></i> Demo files · browser memory</div>
+      </aside>
+
+      <section class="editor-pane">
+        <div class="editor-tabs">
+          <div class="active-tab"><span class="file-icon js" id="activeFileIcon">JS</span><span id="activeFileName">main.js</span><span class="unsaved" id="unsavedMark" hidden>●</span><button class="tab-close" aria-label="Close tab">×</button></div>
+          <button class="new-tab" aria-label="New tab" title="New tab (planned)">＋</button>
+          <div class="editor-actions">
+            <label class="sr-only" for="languageSelect">Execution language</label>
+            <select id="languageSelect" class="language-select"><option value="javascript">JavaScript</option><option value="python">Python</option></select>
+            <button id="runBtn" class="run-button" type="button"><span>▶</span> Run</button>
+            <button class="icon-button" aria-label="More run options" title="More run options">⋮</button>
+          </div>
+        </div>
+        <div class="editor-body">
+          <div class="line-gutter" id="lineGutter" aria-hidden="true">1</div>
+          <label class="sr-only" for="codeEditor">Code editor</label>
+          <textarea id="codeEditor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Code editor"></textarea>
+        </div>
+        <div class="editor-status"><span id="lineInfo">Lines: 1</span><span>UTF-8</span><span>Spaces: 2</span><span class="status-right">Prototype editor</span></div>
+      </section>
     </section>
-    <section class="runtime-settings" aria-label="Local backend connection">
-      <div class="runtime-heading"><strong>Execution backend</strong><span class="dev-badge">LOCAL DEVELOPMENT ONLY</span></div>
-      <div class="runtime-fields">
+
+    <section class="lower-grid">
+      <section class="terminal-pane">
+        <div class="pane-title terminal-title"><span class="terminal-icon">⌘</span> Terminal <span class="terminal-shell">PowerShell ▾</span><button class="icon-button small" title="New terminal (planned)">＋</button><span class="push-right"></span><button class="icon-button small" title="Clear output" id="clearOutputBtn">⌫</button></div>
+        <div class="terminal-content">
+          <div class="terminal-prompt">PS C:\MiniComputer\Projects&gt; <span>workspace status</span></div>
+          <div class="terminal-message">Mini Computer demo workspace ready.</div>
+          <div class="terminal-prompt">PS C:\MiniComputer\Projects&gt; <span class="cursor-block"> </span></div>
+          <p class="terminal-note">Terminal commands are a visual placeholder in this UI prototype. Use Run to execute code.</p>
+        </div>
+      </section>
+      <section class="results-pane">
+        <div class="results-head">
+          <div class="output-tabs"><button class="output-tab active" data-panel="output" type="button">▣ Output</button><button class="output-tab" data-panel="explain" type="button">✧ Explain</button></div>
+          <div class="result-tools"><span id="runStatus">Ready</span><button class="icon-button small" title="Expand output">⛶</button></div>
+        </div>
+        <div id="outputView" class="output-view"><div class="empty-output"><span class="terminal-glyph">›_</span><div><strong>Your output appears here</strong><p>Edit the example and press <b>Run</b> to execute JavaScript in a sandbox.</p></div></div></div>
+        <div id="explainView" class="explain-view" hidden><strong>How this prototype works</strong><p>Edit <code>main.js</code> and press Run. JavaScript runs in an isolated browser frame. Python requires the optional local development backend.</p><p>File Explorer, Terminal, Browser and Apps currently show the target layout; local filesystem and terminal integration are not connected yet.</p></div>
+      </section>
+    </section>
+
+    <section class="connection-panel">
+      <div class="connection-heading"><span class="connection-led"></span><div><strong>Execution backend</strong><small>Optional local development connection</small></div><span class="dev-badge">DEV MODE</span></div>
+      <div class="connection-fields">
         <label>API address<input id="apiUrl" type="url" placeholder="http://127.0.0.1:8000" spellcheck="false"></label>
         <label>Development API key<input id="apiKey" type="password" placeholder="Enter local key (kept in this tab)" autocomplete="off"></label>
-        <button id="connectBtn" class="button" type="button">Connect</button>
+        <button id="connectBtn" class="connect-button" type="button">Connect backend</button>
       </div>
-      <p id="connectionHint" class="connection-hint">Optional. Without a connection, only the JavaScript browser demo runs. Never use a shared API key in a public website.</p>
+      <p id="connectionHint" class="connection-hint">Without a backend connection, only the JavaScript browser demo runs. Never use a shared development key on a public website.</p>
     </section>
-    <section class="workspace" aria-label="Coding workspace">
-      <aside class="sidebar">
-        <div class="section-label">WORKSPACE</div>
-        <button class="file-item active" data-file="main.js" type="button"><span class="file-icon js">JS</span> main.js</button>
-        <button class="file-item" data-file="notes.md" type="button"><span class="file-icon md">MD</span> notes.md</button>
-        <div class="sidebar-note"><span class="status-dot"></span> Demo files stored in this page</div>
-      </aside>
-      <div class="work-area">
-        <div class="editor-head">
-          <div class="tab-title"><span class="file-icon js" id="activeFileIcon">JS</span><span id="activeFileName">main.js</span><span class="unsaved" id="unsavedMark" hidden>●</span></div>
-          <div class="editor-actions"><label class="sr-only" for="languageSelect">Execution language</label><select id="languageSelect" class="language-select"><option value="javascript">JavaScript</option><option value="python">Python</option></select><button id="runBtn" class="button button-run" type="button"><span aria-hidden="true">▶</span> Run</button></div>
-        </div>
-        <label class="sr-only" for="codeEditor">Code editor</label>
-        <textarea id="codeEditor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Code editor"></textarea>
-        <div class="editor-footer"><span id="lineInfo">Lines: 1</span><span>UTF-8</span><span>Browser sandbox</span></div>
-      </div>
-    </section>
-    <section class="output-panel">
-      <div class="output-head">
-        <div class="output-tabs"><button class="output-tab active" data-panel="output" type="button">Output</button><button class="output-tab" data-panel="explain" type="button">Explain</button></div>
-        <div class="output-actions"><span id="runStatus">Ready</span><button id="clearOutputBtn" class="button button-quiet" type="button">Clear</button></div>
-      </div>
-      <div id="outputView" class="output-view"><div class="empty-output"><span class="terminal-glyph">›_</span><div><strong>Your output appears here</strong><p>Choose <b>Run</b> to execute the JavaScript example in an isolated browser frame.</p></div></div></div>
-      <div id="explainView" class="explain-view" hidden><strong>How this demo works</strong><p>Edit <code>main.js</code> and press Run. Output is captured from a sandboxed iframe. This starter does not execute Python, connect to an LLM, or connect to an MCP server yet.</p><p>Use the <code>notes.md</code> file to see the project direction.</p></div>
-    </section>
-    <footer class="app-footer"><span>MINI COMPUTER <span class="muted">· MVP FOUNDATION</span></span><span>Cloud execution and MCP integration are planned next.</span></footer>
+
+    <footer class="bottom-bar"><div class="app-launcher"><span class="launcher-icon files">▰</span><span>Files</span><span class="launcher-icon terminal">⌘</span><span>Terminal</span><span class="launcher-icon code">‹/›</span><span>Code Editor</span><span class="launcher-icon browser">◎</span><span>Browser</span><span class="launcher-icon apps">⬡</span><span>Apps</span><span class="launcher-icon settings">⚙</span><span>Settings</span></div><div class="ready-state"><i></i> Ready <span class="divider"></span> <span class="muted">MVP</span></div></footer>
   </main>
   <script src="app.js"></script>
+  <script>
+    document.querySelectorAll('[data-tool]').forEach(button => button.addEventListener('click', () => {
+      document.querySelectorAll('[data-tool]').forEach(item => item.classList.toggle('selected', item === button));
+      const tool = button.dataset.tool;
+      if (tool === 'Editor') document.getElementById('codeEditor').focus();
+      if (tool === 'Terminal') document.querySelector('.terminal-content').scrollIntoView({behavior:'smooth',block:'nearest'});
+      if (tool === 'Files') document.querySelector('.explorer').scrollIntoView({behavior:'smooth',block:'nearest'});
+      if (tool === 'Browser' || tool === 'Apps') {
+        document.getElementById('connectionHint').textContent = tool + ' workspace is planned; this prototype currently supports the editor and code runner.';
+      }
+    }));
+  </script>
 </body>
 </html>
