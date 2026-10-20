@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mini Computer — an interactive coding workspace concept for ChatGPT and MCP integrations.">
+  <title>Mini Computer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Mini Computer home"><span class="brand-mark">M</span><span>Mini Computer</span></a>
+      <div class="connection"><span class="status-dot"></span><span>Local demo runtime</span></div>
+      <button id="resetBtn" class="button button-quiet" type="button">Reset demo</button>
+    </header>
+    <section class="intro">
+      <p class="eyebrow">YOUR AI WORKSPACE</p>
+      <h1>Think it. Build it. <span>Run it.</span></h1>
+      <p class="subtitle">A small, interactive computer workspace designed to grow into a ChatGPT app with MCP tools.</p>
+    </section>
+    <section class="workspace" aria-label="Coding workspace">
+      <aside class="sidebar">
+        <div class="section-label">WORKSPACE</div>
+        <button class="file-item active" data-file="main.js" type="button"><span class="file-icon js">JS</span> main.js</button>
+        <button class="file-item" data-file="notes.md" type="button"><span class="file-icon md">MD</span> notes.md</button>
+        <div class="sidebar-note"><span class="status-dot"></span> Demo files stored in this page</div>
+      </aside>
+      <div class="work-area">
+        <div class="editor-head">
+          <div class="tab-title"><span class="file-icon js" id="activeFileIcon">JS</span><span id="activeFileName">main.js</span><span class="unsaved" id="unsavedMark" hidden>●</span></div>
+          <div class="editor-actions"><span class="language-label" id="languageLabel">JavaScript</span><button id="runBtn" class="button button-run" type="button"><span aria-hidden="true">▶</span> Run</button></div>
+        </div>
+        <label class="sr-only" for="codeEditor">Code editor</label>
+        <textarea id="codeEditor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Code editor"></textarea>
+        <div class="editor-footer"><span id="lineInfo">Lines: 1</span><span>UTF-8</span><span>Browser sandbox</span></div>
+      </div>
+    </section>
+    <section class="output-panel">
+      <div class="output-head">
+        <div class="output-tabs"><button class="output-tab active" data-panel="output" type="button">Output</button><button class="output-tab" data-panel="explain" type="button">Explain</button></div>
+        <div class="output-actions"><span id="runStatus">Ready</span><button id="clearOutputBtn" class="button button-quiet" type="button">Clear</button></div>
+      </div>
+      <div id="outputView" class="output-view"><div class="empty-output"><span class="terminal-glyph">›_</span><div><strong>Your output appears here</strong><p>Choose <b>Run</b> to execute the JavaScript example in an isolated browser frame.</p></div></div></div>
+      <div id="explainView" class="explain-view" hidden><strong>How this demo works</strong><p>Edit <code>main.js</code> and press Run. Output is captured from a sandboxed iframe. This starter does not execute Python, connect to an LLM, or connect to an MCP server yet.</p><p>Use the <code>notes.md</code> file to see the project direction.</p></div>
+    </section>
+    <footer class="app-footer"><span>MINI COMPUTER <span class="muted">· MVP FOUNDATION</span></span><span>Cloud execution and MCP integration are planned next.</span></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
