@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      EXECUTION_API_KEY: ${EXECUTION_API_KEY:?Set EXECUTION_API_KEY in your shell}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://127.0.0.1:5173}
+      RUN_TIMEOUT_SECONDS: ${RUN_TIMEOUT_SECONDS:-5}
+      RUNNER_IMAGE: mini-computer-runner:dev
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    # IMPORTANT: Docker socket access is effectively host-level privilege.
+    # Use this compose file only for local development, not public hosting.
