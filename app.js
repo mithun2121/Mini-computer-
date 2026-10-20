@@ -5,6 +5,7 @@
   const runStatus = document.getElementById('runStatus');
   const unsavedMark = document.getElementById('unsavedMark');
   const lineInfo = document.getElementById('lineInfo');
+  const lineGutter = document.getElementById('lineGutter');
   const apiUrlInput = document.getElementById('apiUrl');
   const apiKeyInput = document.getElementById('apiKey');
   const connectionHint = document.getElementById('connectionHint');
@@ -27,7 +28,9 @@
     }
   }
   function updateLineInfo() {
-    lineInfo.textContent = 'Lines: ' + Math.max(1, editor.value.split('\n').length);
+    const count = Math.max(1, editor.value.split('\n').length);
+    lineInfo.textContent = 'Lines: ' + count;
+    if (lineGutter) lineGutter.textContent = Array.from({ length: count }, (_, i) => i + 1).join('\n');
   }
   function markDirty() {
     unsavedMark.hidden = editor.value === files[activeFile];
