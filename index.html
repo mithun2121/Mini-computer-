@@ -19,6 +19,15 @@
       <h1>Think it. Build it. <span>Run it.</span></h1>
       <p class="subtitle">A small, interactive computer workspace designed to grow into a ChatGPT app with MCP tools.</p>
     </section>
+    <section class="runtime-settings" aria-label="Local backend connection">
+      <div class="runtime-heading"><strong>Execution backend</strong><span class="dev-badge">LOCAL DEVELOPMENT ONLY</span></div>
+      <div class="runtime-fields">
+        <label>API address<input id="apiUrl" type="url" placeholder="http://127.0.0.1:8000" spellcheck="false"></label>
+        <label>Development API key<input id="apiKey" type="password" placeholder="Enter local key (kept in this tab)" autocomplete="off"></label>
+        <button id="connectBtn" class="button" type="button">Connect</button>
+      </div>
+      <p id="connectionHint" class="connection-hint">Optional. Without a connection, only the JavaScript browser demo runs. Never use a shared API key in a public website.</p>
+    </section>
     <section class="workspace" aria-label="Coding workspace">
       <aside class="sidebar">
         <div class="section-label">WORKSPACE</div>
@@ -29,7 +38,7 @@
       <div class="work-area">
         <div class="editor-head">
           <div class="tab-title"><span class="file-icon js" id="activeFileIcon">JS</span><span id="activeFileName">main.js</span><span class="unsaved" id="unsavedMark" hidden>●</span></div>
-          <div class="editor-actions"><span class="language-label" id="languageLabel">JavaScript</span><button id="runBtn" class="button button-run" type="button"><span aria-hidden="true">▶</span> Run</button></div>
+          <div class="editor-actions"><label class="sr-only" for="languageSelect">Execution language</label><select id="languageSelect" class="language-select"><option value="javascript">JavaScript</option><option value="python">Python</option></select><button id="runBtn" class="button button-run" type="button"><span aria-hidden="true">▶</span> Run</button></div>
         </div>
         <label class="sr-only" for="codeEditor">Code editor</label>
         <textarea id="codeEditor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Code editor"></textarea>
