@@ -72,7 +72,7 @@ def run_code(request: RunRequest) -> RunResponse:
                    "--pids-limit=64", "--read-only",
                    "--tmpfs", "/tmp:rw,noexec,nosuid,size=16m",
                    "--user=65534:65534", "--security-opt=no-new-privileges",
-                   "--cap-drop=ALL", RUNNER_IMAGE, "python", "-I", "-"]
+                   "--cap-drop=ALL", RUNNER_IMAGE, "python3", "-I", "-"]
     else:
         command = ["docker", "run", "--rm", "-i", "--pull=never",
                    "--network=none", "--memory=128m", "--cpus=0.5",
