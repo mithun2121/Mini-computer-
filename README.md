@@ -4,7 +4,7 @@
 
 Mini Computer aims to let a person and an AI work on the same project: edit files, run code, inspect real output and errors, and use explicitly connected tools. The long-term direction is an embedded ChatGPT app with a hosted backend and optional local-computer connector.
 
-> **Status: early prototype.** The current version is a static browser demo. It includes a file switcher, JavaScript editor, sandboxed iframe runner, and output panel. It does not yet connect to an LLM, MCP server, cloud execution service, or persistent storage.
+> **Status: early prototype.** The current version is a static browser demo. It includes a file switcher, JavaScript editor, sandboxed iframe runner, and output panel. It can send code to a locally configured execution API. It does not yet connect to an LLM, MCP server, cloud execution service, or persistent storage.
 
 ## Run the demo
 
