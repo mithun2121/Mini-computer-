@@ -62,3 +62,32 @@ Issues and pull requests are welcome. Please describe the intended behavior and 
 ## License
 
 The repository license should be selected and added by the project owner. Until a license file is present, do not assume that the code is licensed for reuse.
+
+## Embedded ChatGPT app / MCP scaffold
+
+The repository now includes an early **MCP Apps UI scaffold** intended to render inside a compatible ChatGPT conversation, rather than only as a standalone dashboard:
+
+- `mcp-server/server.js` registers the embedded UI resource and three workspace tools: open workspace, list files, read file, and write file.
+- `mcp-server/ui/workspace.html` is a self-contained responsive workspace UI.
+- `package.json` contains the Node.js dependencies.
+
+### Start the MCP server locally
+
+Requires Node.js 20 or newer.
+
+```powershell
+npm install
+$env:MINI_COMPUTER_WORKSPACE = "$PWD\workspace"
+npm start
+```
+
+Health check: `http://localhost:8788/health`. The MCP endpoint is `http://localhost:8788/mcp`.
+
+**Important limitations:** this is a development scaffold, not a published or verified ChatGPT app. ChatGPT needs to reach the MCP endpoint over a supported remote connection; a localhost URL alone is not accessible to ChatGPT's hosted service. Use an approved secure tunnel or a properly secured HTTPS deployment for testing. Do not expose the development server publicly without authentication and review.
+
+The workspace tools are restricted to the configured workspace directory and skip hidden folders and symlinks. They do not provide general access to the whole PC. Terminal execution and Python execution are intentionally not enabled in this MCP scaffold; they require a separately isolated runner, explicit permissions, and security tests. The current embedded UI is a UI prototype and is not yet wired to call the file tools directly.
+
+Official references:
+- OpenAI Apps SDK: https://developers.openai.com/apps-sdk/
+- MCP Apps UI integration: https://developers.openai.com/plugins/build/chatgpt-ui
+- MCP server + UI quickstart: https://developers.openai.com/plugins/build/app-quickstart
