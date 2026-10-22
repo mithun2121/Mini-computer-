@@ -19,6 +19,13 @@ const MAX_FILE_BYTES = 512 * 1024;
 const MAX_FILES = 500;
 const app = express();
 app.set("trust proxy", 1);
+app.use((req, res, next) => {
+  if (req.path === "/mcp" || req.path.startsWith("/oauth/")) {
+    console.log(`[HTTP] ${req.method} ${req.path} -> incoming`);
+    res.on("finish", () => console.log(`[HTTP] ${req.method} ${req.path} -> ${res.statusCode}`));
+  }
+  next();
+});
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: false, limit: "16kb" }));
 registerOAuthRoutes(app);
