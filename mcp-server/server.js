@@ -20,6 +20,7 @@ const MAX_FILES = 500;
 const app = express();
 app.set("trust proxy", 1);
 app.use(express.json({ limit: "1mb" }));
+app.use(express.urlencoded({ extended: false, limit: "16kb" }));
 registerOAuthRoutes(app);
 
 let agentSocket = null;
