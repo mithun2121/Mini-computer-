@@ -1,15 +1,22 @@
 {
-  "name": "mini-computer-mcp",
-  "version": "0.2.0",
-  "private": true,
-  "type": "module",
-  "description": "Mini Computer MCP server and embedded ChatGPT workspace UI",
-  "scripts": { "start": "node mcp-server/server.js" },
-  "engines": { "node": ">=20" },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.0",
-    "@modelcontextprotocol/ext-apps": "^1.0.0",
-    "express": "^5.1.0",
-    "zod": "^3.25.0"
-  }
+    "name":  "mini-computer-mcp",
+    "version":  "0.2.0",
+    "private":  true,
+    "type":  "module",
+    "description":  "Mini Computer MCP server and embedded ChatGPT workspace UI",
+    "scripts":  {
+                    "start":  "node mcp-server/server.js",
+                    "agent":  "node mcp-server/agent.js"
+                },
+    "engines":  {
+                    "node":  "\u003e=20"
+                },
+    "dependencies":  {
+                         "@modelcontextprotocol/ext-apps":  "^1.0.0",
+                         "@modelcontextprotocol/sdk":  "^1.12.0",
+                         "express":  "^5.1.0",
+                         "express-rate-limit":  "^8.7.1",
+                         "ws":  "^8.22.0",
+                         "zod":  "^3.25.0"
+                     }
 }

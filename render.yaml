@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: mini-computer-mcp
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: MINI_COMPUTER_OAUTH_SECRET
+        sync: false
+      - key: MINI_COMPUTER_OAUTH_USERNAME
+        sync: false
+      - key: MINI_COMPUTER_OAUTH_PASSWORD
+        sync: false
+      - key: MINI_COMPUTER_AGENT_TOKEN
+        sync: false
+      - key: MINI_COMPUTER_PUBLIC_ORIGIN
+        sync: false

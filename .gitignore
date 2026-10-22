@@ -1,0 +1,11 @@
+﻿node_modules/
+.env
+.env.*
+!.env.example
+.mini-computer-token
+*.log
+mcp-server/server.js.pre-auth.bak
+.DS_Store
+.mini-computer-agent-token
+.env
+tools/tunnel-client/
