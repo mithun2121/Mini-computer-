@@ -53,11 +53,11 @@ export function verifyAccessToken(token, expectedUse = "access") {
 export function registerOAuthRoutes(app) {
   app.get("/.well-known/oauth-protected-resource", (_req, res) => {
     const origin = publicOrigin();
-    res.json({ resource: origin, authorization_servers: [origin], bearer_methods_supported: ["header"], scopes_supported: ["files:read", "files:write", "terminal:execute"] });
+    res.json({ resource: origin, authorization_servers: [origin], bearer_methods_supported: ["header"], scopes_supported: ["files:read", "files:write", "terminal:execute", "offline_access"] });
   });
   app.get("/.well-known/oauth-authorization-server", (_req, res) => {
     const origin = publicOrigin();
-    res.json({ issuer: origin, authorization_endpoint: `${origin}/oauth/authorize`, token_endpoint: `${origin}/oauth/token`, registration_endpoint: `${origin}/oauth/register`, response_types_supported: ["code"], response_modes_supported: ["query"], grant_types_supported: ["authorization_code", "refresh_token"], code_challenge_methods_supported: ["S256"], token_endpoint_auth_methods_supported: ["none"], scopes_supported: ["files:read", "files:write", "terminal:execute"] });
+    res.json({ issuer: origin, authorization_endpoint: `${origin}/oauth/authorize`, token_endpoint: `${origin}/oauth/token`, registration_endpoint: `${origin}/oauth/register`, response_types_supported: ["code"], response_modes_supported: ["query"], grant_types_supported: ["authorization_code", "refresh_token"], code_challenge_methods_supported: ["S256"], token_endpoint_auth_methods_supported: ["none"], scopes_supported: ["files:read", "files:write", "terminal:execute", "offline_access"] });
   });
   app.post("/oauth/register", (req, res) => {
     const body = req.body || {};
@@ -82,7 +82,7 @@ export function registerOAuthRoutes(app) {
       if (typeof state !== "string" || state.length < 8 || state.length > 512) return res.status(400).send("OAuth state is required.");
       if (resource !== origin) return res.status(400).send("The OAuth resource parameter must match this MCP server's HTTPS origin.");
       const requestedScopes = String(scope || "files:read").split(/\s+/).filter(Boolean);
-      if (!requestedScopes.length || requestedScopes.some((s) => !["files:read", "files:write", "terminal:execute"].includes(s))) return res.status(400).send("Unsupported OAuth scope.");
+      if (!requestedScopes.length || requestedScopes.some((s) => !["files:read", "files:write", "terminal:execute", "offline_access"].includes(s))) return res.status(400).send("Unsupported OAuth scope.");
       const nonce = randomId(24);
       pendingAuthorizations.set(nonce, { client_id: client_id, redirect_uri: redirect.href, code_challenge, state, scopes: requestedScopes, resource, created: Date.now() });
       const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Mini Computer authorization</title><style>body{font:16px system-ui;max-width:440px;margin:10vh auto;padding:24px}input{box-sizing:border-box;width:100%;padding:12px;margin:8px 0 16px}button{padding:12px 18px;width:100%}</style></head><body><h1>Authorize Mini Computer</h1><p>Sign in to allow ChatGPT to use your Mini Computer tools. Grant access only if you initiated this connection.</p><form method="post" action="/oauth/authorize"><input type="hidden" name="nonce" value="${nonce}"><label>Username</label><input name="username" autocomplete="username" required><label>Password</label><input name="password" type="password" autocomplete="current-password" required><button type="submit">Sign in and authorize</button></form></body></html>`;
